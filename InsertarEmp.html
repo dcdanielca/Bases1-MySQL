@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>Insertar Empleado</title>
+
+</head>
+
+<form action="InsertarEmp.php" method="POST">
+
+<h4>Insertar datos empleado</h4>
+
+	<label>Cedula: </label>
+	<input type="number" name="cedula" min="0" max="9999999999">
+
+	<br>
+	
+	<label>Nombre: </label>
+	<input type="text" name="nombre" maxlength="30">
+
+	<br>
+	
+	<label>Apellido: </label>
+	<input type="text" name="apellido" maxlength="30">
+
+	<br>
+
+	<label>Sueldo: </label>
+	<input type="number" name="sueldo" min="0" max="99999999">
+
+	<br>
+	
+	<label>Telefono: </label>
+	<input type="tel" name="telefono">
+
+	<br>
+	
+	<label>Cedula del jefe: </label>	
+	<?php
+		require("conexion.php");
+
+		$query="SELECT cedula FROM empleado";
+		$result=mysqli_query($conexion,$query) or die(mysqli_error($conexion));
+
+		if($result){
+		?>
+				<select name = "listaemp">
+				<option value="NULL">Sin jefe</option>
+
+					<?php
+						while($row = $result->fetch_array()){
+							$cedula = $row["cedula"];
+						?>
+							<option><?php echo $cedula ?></option>
+						<?php				
+						}
+					?>			
+				</select>
+			<?php
+		}
+	?>	
+	<br>
+	
+	<button type="submit" name="enviar">Enviar Datos</button>
+	
+</form>
+</html>

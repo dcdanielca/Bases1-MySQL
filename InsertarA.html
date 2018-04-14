@@ -1,0 +1,80 @@
+<html>
+<head>
+	<title>Insertar Automovil</title>
+
+</head>
+
+<form action="InsertarA.php" method="POST">
+
+<h4>Insertar datos automovil</h4>
+
+	<label>Placa: </label>
+	<input type="text" name="placa" maxlength="7">
+
+	<br>
+	
+	<label>Color: </label>
+	<input type="text" name="color" maxlength="15">
+
+	<br>
+	
+	<label>Fecha de venta: </label>
+	<input type="date" name="fecha_venta">
+
+	<br>
+
+	<label>Codigo del dueño: </label>
+	<?php
+		require("conexion.php");
+
+		$query="SELECT codigo FROM cliente";
+		$result=mysqli_query($conexion,$query) or die(mysqli_error($conexion));
+
+		if($result){
+		?>
+				<select name = "listaclientes">
+
+					<?php
+						while($row = $result->fetch_array()){
+							$codigo = $row["codigo"];
+						?>
+							<option><?php echo $codigo ?></option>
+						<?php				
+						}
+					?>			
+				</select>
+			<?php
+		}
+	?>	
+	<br>
+	
+	<label>Cedula del vendedor: </label>
+	<?php
+		require("conexion.php");
+
+		$query="SELECT cedula FROM empleado";
+		$result=mysqli_query($conexion,$query) or die(mysqli_error($conexion));
+
+		if($result){
+		?>
+				<select name = "listavend">
+
+					<?php
+						while($row = $result->fetch_array()){
+							$cedula = $row["cedula"];
+						?>
+							<option><?php echo $cedula ?></option>
+						<?php				
+						}
+					?>			
+				</select>
+			<?php
+		}
+	?>	
+	<br>
+	
+	<button type="submit" name="enviar">Enviar Datos</button>
+
+	
+</form>
+</html>

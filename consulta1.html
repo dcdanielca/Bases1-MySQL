@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>Consulta de todos clientes que no tienen automovil</title>
+</head>
+<body>
+
+	<?php
+		require("conexion.php");
+
+		$query="SELECT * FROM cliente NATURAL JOIN persona WHERE codigo NOT IN(SELECT dueno FROM automovil);";
+
+		$result=mysqli_query($conexion,$query) or die(mysqli_error($conexion));
+
+		if($result){
+			?>
+				<h4>PERSONAS QUE NO HAN COMPRADO AUTOMOVILES</h4>
+
+				<table border='1' widht="29%">
+					<tr>
+						<th>codigo</th>
+						<th>cedula</th>
+						<th>nombre</th>
+						<th>apellido</th>
+						<th>celular</th>
+					</tr>
+
+					<?php
+						while($row = $result->fetch_array()){
+							$codigo= $row["codigo"];
+							$cedula = $row["cedula"];
+							$nombre = $row["nombre"];
+							$apellido = $row["apellido"];
+							$celular= $row["celular"];
+						?>
+							<tr> 
+								<td><?php echo $codigo ?></td>
+								<td><?php echo $cedula ?></td>
+								<td><?php echo $nombre ?></td>
+								<td><?php echo $apellido ?></td>
+								<td><?php echo $celular ?></td>
+							</tr>	
+						<?php
+						}
+					?>
+
+				</table>	
+			<?php
+		} else{
+			echo "No hay clientes de tipo persona en la base de Datos";
+		}
+	?>
+
+
+</body>
+</html>

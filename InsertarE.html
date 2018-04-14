@@ -1,0 +1,45 @@
+<html>
+<head>
+	<title>Insertar Persona</title>
+
+</head>
+
+<form action="InsertarE.php" method="GET">
+
+<h4>Insertar datos empresa</h4>
+
+	<label>Codigo: </label>
+	<input type="number" name="codigo" min="0" max="9999999999">
+
+	<br>
+	
+	<label>Nit: </label>
+	<input type="number" name="nit" min="0" max="9999999999">
+
+	<br>
+
+	<label>Nombre: </label>
+	<input type="text" name="nombre" maxlength="20">
+
+	<br>
+
+	<label>Direccion: </label>
+	<input type="text" name="direccion" maxlength="30">
+
+	<br>	
+	
+	<label>Correo electronico: </label>
+	<input type="email" name="correo" maxlength="20">
+
+	<br>
+
+	<label>Telefono: </label>
+	<input type="tel" name="telefono" min="0" max="9999999999">
+	
+	<br>
+
+	<button type="submit" name="enviar">Enviar Datos</button>
+
+	
+</form>
+</html>

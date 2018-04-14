@@ -1,0 +1,37 @@
+<html>
+<head>
+	<title>Actualizar Automovil</title>
+</head>
+<body>
+
+
+	<h2>Actualizar Automovil </h2>
+	<form action="actualizarA.php" method="POST">
+
+			<?php
+		    require("conexion.php");
+
+					$query="SELECT placa FROM automovil";
+					$result=mysqli_query($conexion,$query) or die(mysqli_error($conexion));
+
+					if($result){
+					?>
+							<select name = "listaplacas">
+
+								<?php
+									while($row = $result->fetch_array()){
+										$placa = $row["placa"];
+									?>
+										<option><?php echo $placa ?></option>
+									<?php				
+									}
+								?>			
+							</select>
+			<?php
+		     }
+	        ?>	
+			<input type="submit" value="Actualizar">
+		</form>
+
+</body>
+</html>

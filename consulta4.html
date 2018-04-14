@@ -1,0 +1,79 @@
+<html>
+<head>
+	<title>Consulta de los clientes que tienen mas automoviles</title>
+</head>
+<body>
+
+	<?php
+		require("conexion.php");
+
+		$query="SELECT MAX(conteo) AS conteo FROM(SELECT dueno, COUNT(*) AS conteo FROM automovil GROUP BY dueno) ALIAS;";
+
+		$result=mysqli_query($conexion,$query) or die(mysqli_error($conexion));
+
+
+		if($result)
+		{ 
+
+			$row = $result->fetch_array();
+			$conteo = $row["conteo"];  //Obtenemos al que tiene mas automoviles. El maximo valor que hay.
+           
+            require("conexion.php");
+            if($conteo != 0) {
+			$query2 = "SELECT * FROM cliente where codigo IN(SELECT dueno AS dueno FROM( SELECT dueno, COUNT(*) AS conteo FROM automovil GROUP BY dueno HAVING COUNT(*) = $conteo) ALIAS)";
+
+            $result2=mysqli_query($conexion,$query2) or die(mysqli_error($conexion));
+
+							if($result2){
+								?>
+									<h4>DATOS GENERALES DE LOS CLIENTES CON MAS AUTOMOVILES COMPRADOS </h4>
+
+									<table border='1' widht="29%">
+										<tr>
+											<th>codigo</th>
+											<th>telefono</th>
+											<th>correo_electronico</th>
+										
+										</tr>
+
+										<?php
+											while($row = $result2->fetch_array()){
+												$codigo= $row["codigo"];
+												$telefono = $row["telefono"];
+												$correo_electronico = $row["correo_electronico"];
+											?>
+												<tr> 
+													<td><?php echo $codigo ?></td>
+													<td><?php echo $telefono ?></td>
+													<td><?php echo $correo_electronico ?></td>
+		
+												</tr>	
+											<?php
+											}
+										?>
+
+									</table>	
+								<?php
+							} else{
+								echo "No hay clientes que hayan comprando automoviles en la base de datos";
+							}
+              }
+
+              else{
+
+              	echo "En la base de datos no figuran clientes que hayan comprado automoviles";
+              }
+
+		   }
+
+
+
+
+         ?>
+
+		
+	
+
+
+</body>
+</html>

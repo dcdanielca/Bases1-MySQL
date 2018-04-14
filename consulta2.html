@@ -1,0 +1,58 @@
+<html>
+<head>
+	<title>Consulta de todos clientes que no tienen automovil</title>
+</head>
+<body>
+
+	<?php
+		require("conexion.php");
+
+		$query="SELECT * FROM cliente NATURAL JOIN empresa WHERE codigo NOT IN(SELECT dueno FROM automovil);";
+
+		$result=mysqli_query($conexion,$query) or die(mysqli_error($conexion));
+
+		if($result){
+			?>
+				<h4>EMPRESAS QUE NO HAN COMPRADO AUTOMOVILES</h4>
+
+				<table border='1' widht="29%">
+					<tr>
+						<th>codigo</th>
+						<th>telefono</th>
+						<th>correo electronico</th>
+						<th>nit</th>
+						<th>nombre</th>
+						<th>direccion</th>
+					</tr>
+
+					<?php
+						while($row = $result->fetch_array()){
+							$codigo= $row["codigo"];
+							$telefono = $row["telefono"];
+							$correo_empresa = $row["correo_electronico"];
+							$nit = $row["nit"];
+							$nombre_empresa = $row["nombre"];
+							$direccion = $row["direccion"];
+						?>
+							<tr> 
+								<td><?php echo $codigo ?></td>
+								<td><?php echo $telefono ?></td>
+								<td><?php echo $correo_empresa ?></td>
+								<td><?php echo $nit ?></td>
+								<td><?php echo $nombre_empresa ?></td>
+								<td><?php echo $direccion ?></td>
+							</tr>	
+						<?php
+						}
+					?>
+
+				</table>	
+			<?php
+		} else{
+			echo "No hay clientes de tipo empresa en la base de Datos";
+		}
+	?>
+
+
+</body>
+</html>
